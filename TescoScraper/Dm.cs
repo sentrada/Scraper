@@ -4,12 +4,12 @@ namespace TescoScraper;
 
 public class Dm
 {
-    private SeleniumHelper _helper;
-    private const string baseUrl = "https://www.dm.hu/";
+    private readonly SeleniumHelper _helper;
+    private const string BASE_URL = "https://www.dm.hu/";
 
     public Dm()
     {
-        _helper = new SeleniumHelper(baseUrl);
+        _helper = new SeleniumHelper(BASE_URL);
     }
 
     public void Create()
@@ -39,13 +39,13 @@ public class Dm
                         if (int.TryParse(_helper.GetElementByXpath(thirdLevelNode.Link,
                                     @"//*[@id=""mainSectionContainer""]/div[*]/div/div/div[*]/div[*]/span/b").Text,
                                 out var sku))
-                            thirdLeveCategory.SKU = sku.ToString();
+                            thirdLeveCategory.Sku = sku.ToString();
 
                         secondLeveCategory.AddSubCategory(thirdLeveCategory);    
                     }
                     catch
                     {
-                        thirdLeveCategory.SKU = "?";
+                        thirdLeveCategory.Sku = "?";
                         secondLeveCategory.AddSubCategory(thirdLeveCategory);
                     }
                     

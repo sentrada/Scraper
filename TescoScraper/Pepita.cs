@@ -5,11 +5,11 @@ namespace TescoScraper;
 public class Pepita
 {
     private readonly SeleniumHelper _helper;
-    private const string baseUrl = "https://pepita.hu/osszes-kategoria";
+    private const string BASE_URL = "https://pepita.hu/osszes-kategoria";
 
     public Pepita()
     {
-        _helper = new SeleniumHelper(baseUrl);
+        _helper = new SeleniumHelper(BASE_URL);
     }
 
     public void Create()
@@ -29,9 +29,8 @@ public class Pepita
             foreach (var secondLevelNode in secondLevelNodes)
             {
                 var secondLevelCategory = new Category(secondLevelNode.Name, firstLeveCategory);
-                var thirdLevelNodes = new List<Node>();
 
-                thirdLevelNodes = GetWhatWereYouThinkingNodes(secondLevelNode);
+                var thirdLevelNodes = GetWhatWereYouThinkingNodes(secondLevelNode);
 
                 foreach (var thirdLevelNode in thirdLevelNodes)
                 {
@@ -56,7 +55,7 @@ public class Pepita
                                     var fifthLevelCategory = new Category(parsed.Name, fourthLevelCategory,
                                         fifthLevelNode.Link)
                                     {
-                                        SKU = fitthLevelparsed.Sku
+                                        Sku = fitthLevelparsed.Sku
                                     };
 
                                     fourthLevelCategory.AddSubCategory(fifthLevelCategory);
@@ -64,7 +63,7 @@ public class Pepita
                             }
                             else
                             {
-                                thirdLevelCategory.SKU = thirdLevelParsed.Sku;
+                                thirdLevelCategory.Sku = thirdLevelParsed.Sku;
                             }
 
                             thirdLevelCategory.AddSubCategory(fourthLevelCategory);
@@ -72,7 +71,7 @@ public class Pepita
                     }
                     else
                     {
-                        thirdLevelCategory.SKU = thirdLevelParsed.Sku;
+                        thirdLevelCategory.Sku = thirdLevelParsed.Sku;
                     }
 
                     secondLevelCategory.AddSubCategory(thirdLevelCategory);
@@ -89,32 +88,20 @@ public class Pepita
 
     private List<Node> GetWhatWereYouThinkingNodes(Node node)
     {
-        try
-        {
-            var parent = _helper
-                .GetElementByCssSelector(node.Link, @"ul#category-filters");
+        var parent = _helper
+            .GetElementByCssSelector(node.Link, @"ul#category-filters");
 
-            var elements = parent?.FindElements(By.TagName("a"));
+        var elements = parent?.FindElements(By.TagName("a"));
 
-            if (elements != null)
-            {
-                return elements.GetNodesFromWebElements();
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"4.\t{node.Link}");
-        }
-
-        return new List<Node>();
+        return elements != null ? elements.GetNodesFromWebElements() : new List<Node>();
     }
 
 
     public static (string Name, string Sku) ParseString(string input)
     {
-        int lastIndexOfBracket = input.LastIndexOf('(');
-        string firstPart = input.Substring(0, lastIndexOfBracket - 1).Trim();
-        string secondPart = input.Substring(lastIndexOfBracket + 1, input.Length - lastIndexOfBracket - 2).Trim();
+        var lastIndexOfBracket = input.LastIndexOf('(');
+        var firstPart = input.Substring(0, lastIndexOfBracket - 1).Trim();
+        var secondPart = input.Substring(lastIndexOfBracket + 1, input.Length - lastIndexOfBracket - 2).Trim();
 
 
         return (firstPart, secondPart);

@@ -4,12 +4,12 @@ namespace TescoScraper;
 
 public class Auchan
 {
-    private SeleniumHelper _helper;
-    private const string baseUrl = "https://online.auchan.hu/en/shop";
+    private readonly SeleniumHelper _helper;
+    private const string BASE_URL = "https://online.auchan.hu/en/shop";
 
     public Auchan()
     {
-        _helper = new SeleniumHelper(baseUrl);
+        _helper = new SeleniumHelper(BASE_URL);
     }
 
     public void Create()
@@ -19,7 +19,7 @@ public class Auchan
         var links = _helper.GetElementsByClassName(parent, "Rb2x").Select(x => x.GetAttribute("Id")).ToList();
         foreach (var id in links)
         {
-            var allCategory = _helper.GetElementByCssSelector(baseUrl, "button._3ozx._-5qq.Tulx");
+            var allCategory = _helper.GetElementByCssSelector(BASE_URL, "button._3ozx._-5qq.Tulx");
             var element = _helper.GetElementsByClassName(allCategory, "Rb2x")
                 .FirstOrDefault(x => x.GetAttribute("Id") == id);
 
@@ -43,7 +43,7 @@ public class Auchan
                 var group =_helper.GetElementByCssSelector(item.Link.ToString(), "div.progress-bar");
                 var skuString =  group.GetAttribute("aria-valuemax");
                 if(int.TryParse(skuString,out var sku))
-                    item.SKU = sku.ToString();
+                    item.Sku = sku.ToString();
                 category.AddSubCategory(item);
             }
             pCategory.AddSubCategory(category);

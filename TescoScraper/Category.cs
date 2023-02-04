@@ -2,16 +2,18 @@ namespace TescoScraper;
 
 public class Category
 {
-    public string Name { get; set; }
-    public List<Category> SubCategories { get; set; }
+    private string Name { get; set; }
+    private List<Category> SubCategories { get; set; }
 
     public Uri Link { get; set; }
 
-    public string? SKU { get; set; }
+    public string? Sku { get; set; }
 
-    private string _path;
+    private readonly string _path;
     
-    public Category(string name, Category parent, string? url = null)
+#pragma warning disable CS8618
+    public Category(string name, Category? parent, string? url = null)
+#pragma warning restore CS8618
     {
         Name = name;
         SubCategories = new List<Category>();
@@ -25,7 +27,7 @@ public class Category
 
     public string GetPath()
     {
-        return string.IsNullOrEmpty(SKU) ? _path : $"{_path};{SKU}";
+        return string.IsNullOrEmpty(Sku) ? _path : $"{_path};{Sku}";
     }
     
     public void AddSubCategory(Category subCategory)
@@ -33,6 +35,7 @@ public class Category
         SubCategories.Add(subCategory);
     }
 
+    // ReSharper disable once InconsistentNaming
     public void BFS(Action<Category> action)
     {
         Queue<Category> queue = new Queue<Category>();
@@ -49,7 +52,7 @@ public class Category
         }
     }
 
-    public Category Search(string name)
+    public Category? Search(string name)
     {
         Queue<Category> queue = new Queue<Category>();
         queue.Enqueue(this);

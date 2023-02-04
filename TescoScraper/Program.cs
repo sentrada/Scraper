@@ -62,7 +62,7 @@ static void DoDo()
                 var fourthLevelCategory =
                     new Category(parsed.Name, thirdLevelCategory, fourthLevelNode.Link)
                     {
-                        SKU = parsed.Sku
+                        Sku = parsed.Sku
                     };
 
                 thirdLevelCategory.AddSubCategory(fourthLevelCategory);
@@ -70,7 +70,7 @@ static void DoDo()
         }
         else
         {
-            thirdLevelCategory.SKU = thirdLevelParsed.Sku;
+            thirdLevelCategory.Sku = thirdLevelParsed.Sku;
         }
 
         secondLevelCategory.AddSubCategory(thirdLevelCategory);
