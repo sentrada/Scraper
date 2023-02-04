@@ -33,10 +33,7 @@ public class SeleniumHelper
         var element = _driver.FindElement(By.Id(id));
         return element;
     }
-    
-
     #endregion
-    
     
     public ReadOnlyCollection<IWebElement> GetElementsByClassName(IWebElement webElement, string className)
     {
@@ -94,7 +91,6 @@ public class SeleniumHelper
     {
         _driver.Url = url.ToString();
         _driver.Navigate();
-        //var webElement = Retry.Do(()=> _driver.FindElement(By.CssSelector(cssSelector)), TimeSpan.FromMilliseconds(300), 10);
         var webElement = _driver.FindElements(By.CssSelector(cssSelector))?.FirstOrDefault();
         return webElement;
     }
@@ -127,9 +123,5 @@ public class SeleniumHelper
         var elements = _driver.FindElements(By.CssSelector(cssSelector));
         return elements;
     }
-
-
- 
-    
     #endregion
 }
