@@ -11,7 +11,6 @@ public static class WebElementExtensions
             .Where(x => !string.IsNullOrEmpty(x.Name))
             .ToList();
     }
-    
 }
 
 public static class StringExtensions

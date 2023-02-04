@@ -96,13 +96,11 @@ public class Pepita
         return elements != null ? elements.GetNodesFromWebElements() : new List<Node>();
     }
 
-
     public static (string Name, string Sku) ParseString(string input)
     {
         var lastIndexOfBracket = input.LastIndexOf('(');
         var firstPart = input.Substring(0, lastIndexOfBracket - 1).Trim();
         var secondPart = input.Substring(lastIndexOfBracket + 1, input.Length - lastIndexOfBracket - 2).Trim();
-
 
         return (firstPart, secondPart);
     }

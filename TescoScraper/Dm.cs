@@ -48,8 +48,6 @@ public class Dm
                         thirdLeveCategory.Sku = "?";
                         secondLeveCategory.AddSubCategory(thirdLeveCategory);
                     }
-                    
-                    
                 }
                 
                 firstLeveCategory.AddSubCategory(secondLeveCategory);
