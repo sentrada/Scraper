@@ -12,11 +12,3 @@ public static class WebElementExtensions
             .ToList();
     }
 }
-
-public static class StringExtensions
-{
-    public static bool HasValue(this string? item)
-    {
-        return item == null;
-    }   
-}
